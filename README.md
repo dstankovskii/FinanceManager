@@ -48,27 +48,40 @@ Finance Manager is a web-based application for managing personal or corporate fi
 
    Go to `https://localhost:5001/api/FinanceManager` to access the API.
 
-/credit
+api/clent/create
+```json
+"dd6dacd5-cda3-4f6a-b865-d17fdc88fae1"
+```
+
+api/transaction/credit
+```json
 {
-  "id": "7bb1fb24-e323-4287-83a4-eef97eae853b",
-  "clientId": "dd6dacd5-cda3-4f6a-b865-d17fdc88fae1",
-  "dateTime": "2019-04-02T13:10:20.0263632+03:00",
-  "amount": 23.05
+   "id": "7bb1fb24-e323-4287-83a4-eef97eae853b",
+   "clientId": "dd6dacd5-cda3-4f6a-b865-d17fdc88fae1",
+   "dateTime": "2019-04-02T13:10:20.0263632+03:00",
+   "amount": 23.05
 }
+```
 
-/revert
+api/transaction/debit
+```json
 {
-  "id": "a790eb6b-43fd-465e-b2b8-5bf434180d9f",
-  "clientId": "dd6dacd5-cda3-4f6a-b865-d17fdc88fae1",
-  "dateTime": "2024-10-27T20:00:52.953Z",
-  "amount": 23.05
+   "id": "a790eb6b-43fd-465e-b2b8-5bf434180d9f",
+   "clientId": "dd6dacd5-cda3-4f6a-b865-d17fdc88fae1",
+   "dateTime": "2024-10-27T20:00:52.953Z",
+   "amount": 23.05
 }
+  ```
 
-/revert
-a790eb6b-43fd-465e-b2b8-5bf434180d9f
+api/transaction/revert
+```json
+"a790eb6b-43fd-465e-b2b8-5bf434180d9f"
+```
 
-/balance
-dd6dacd5-cda3-4f6a-b865-d17fdc88fae1
+api/clent/balance
+```json
+"dd6dacd5-cda3-4f6a-b865-d17fdc88fae1"
+```
 
 ## Contributing
 
