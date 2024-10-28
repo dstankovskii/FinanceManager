@@ -5,10 +5,7 @@ Finance Manager is a web-based application for managing personal or corporate fi
 ## Features
 
 - Track income and expenses
-- User and role management
-- Generate financial reports
 - RESTful API for integration
-- Role-based authorization
 
 ## Getting Started
 
