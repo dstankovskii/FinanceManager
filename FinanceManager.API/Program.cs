@@ -1,4 +1,3 @@
-using FinanceManager.API.Middlewares;
 using FinanceManager.BL.Extensions;
 using FinanceManager.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -37,9 +36,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSerilogRequestLogging();
-
-// custom middleware
-app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseRouting();

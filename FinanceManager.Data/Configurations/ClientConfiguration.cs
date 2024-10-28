@@ -13,6 +13,9 @@ public class ClientConfiguration : IEntityTypeConfiguration<ClientEntity>
         builder.Property(c => c.Balance)
                .HasColumnType("decimal(18,2)");
 
+        builder.Property(c => c.RowVersion)
+            .IsRowVersion();
+
         builder.HasMany(c => c.Transactions)
                .WithOne(t => t.Client)
                .HasForeignKey(t => t.ClientId);

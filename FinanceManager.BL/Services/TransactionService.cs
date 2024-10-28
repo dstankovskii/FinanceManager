@@ -26,7 +26,6 @@ public class TransactionService : ITransactionService
 
     public async Task<TransactionResponseDTO> ProcessTransactionAsync(TransactionDTO dto, TransactionType transactionType)
     {
-        using var dbTransaction = await _context.Database.BeginTransactionAsync();
         try
         {
             var transactionEntity = await _context.Transactions
@@ -52,7 +51,6 @@ public class TransactionService : ITransactionService
                 ClientMapper.ApplyToEntity(client, clientEntity);
 
                 await _context.SaveChangesAsync();
-                await dbTransaction.CommitAsync();
             }
 
             return new TransactionResponseDTO
@@ -61,17 +59,20 @@ public class TransactionService : ITransactionService
                 ClientBalance = client.Balance,
             };
         }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            _logger.LogError(ex, "Concurrency conflict occurred during transaction processing. TransactionId: {TransactionId}", dto.Id);
+            throw new InvalidOperationException("A concurrency conflict occurred. Please try again.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error occurred during transaction processing. TransactionId: {TransactionId}", dto.Id);
-            await dbTransaction.RollbackAsync();
             throw;
         }
     }
 
     public async Task<RevertTransactionResponseDTO> RevertTransactionAsync(Guid id)
     {
-        using var dbTransaction = await _context.Database.BeginTransactionAsync();
         try
         {
             var transactionEntity = await _context.Transactions
@@ -98,7 +99,6 @@ public class TransactionService : ITransactionService
                 ClientMapper.ApplyToEntity(client, clientEntity);
 
                 await _context.SaveChangesAsync();
-                await dbTransaction.CommitAsync();
             }
 
             return new RevertTransactionResponseDTO
@@ -107,10 +107,14 @@ public class TransactionService : ITransactionService
                 ClientBalance = client.Balance,
             };
         }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            _logger.LogError(ex, "Concurrency conflict occurred during transaction processing. TransactionId: {TransactionId}", id);
+            throw new InvalidOperationException("A concurrency conflict occurred. Please try again.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error occurred during transaction revert. TransactionId: {TransactionId}", id);
-            await dbTransaction.RollbackAsync();
             throw;
         }
     }
